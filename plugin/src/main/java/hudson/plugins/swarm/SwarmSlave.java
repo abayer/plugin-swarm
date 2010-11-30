@@ -27,11 +27,10 @@ import java.util.List;
  *
  * @author Kohsuke Kawaguchi
  */
-public class SwarmSlave extends Slave implements EphemeralNode {
-
+public class SwarmSlave extends Slave {
     public SwarmSlave(String name, String nodeDescription, String remoteFS, String numExecutors, String label) throws IOException, FormException {
-        super(name, nodeDescription, remoteFS, numExecutors, Mode.NORMAL, label,
-                SELF_CLEANUP_LAUNCHER, RetentionStrategy.NOOP, Collections.<NodeProperty<?>>emptyList());
+        this(name, nodeDescription, remoteFS, numExecutors, Mode.NORMAL, label,
+             SELF_CLEANUP_LAUNCHER, RetentionStrategy.NOOP, Collections.<NodeProperty<?>>emptyList());
     }
 
     @DataBoundConstructor
@@ -40,9 +39,6 @@ public class SwarmSlave extends Slave implements EphemeralNode {
         super(name,nodeDescription, remoteFS, Util.tryParseNumber(numExecutors, 1).intValue(), mode, labelString, launcher, retentionStrategy, nodeProperties);
     }
 
-    public Node asNode() {
-        return this;
-    }
 
     @Extension
     public static final class DescriptorImpl extends SlaveDescriptor {
